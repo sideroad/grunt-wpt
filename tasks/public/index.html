@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="//cdn.oesmith.co.uk/morris-0.4.3.min.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.1.2/handlebars.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+
+	<script src='app.js'></script>
+	<title>Grunt WebPageTest</title>
+</head>
+<body>
+
+	<div class="container">
+		<nav class="navbar navbar-default" role="navigation">
+		    <!-- Brand and toggle get grouped for better mobile display -->
+		    <div class="navbar-header">
+		        <a class="navbar-brand" href="#">Grunt WebPageTest</a>
+		    </div>
+		</nav>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-2">
+		  		<h2>Location</h2>
+				<select id="locations" class="form-control"></select>
+		  		<h2>URL</h2>
+				<select id="urls" class="form-control"></select>
+			</div>
+			<div class="col-md-10">
+				<h2>Response Time</h2>
+
+				<h3>FirstView Average</h3>
+				<div id="firstAverage" class="graphs"></div>
+
+				<h3>FirstView Median</h3>
+				<div id="firstMedian" class="graphs"></div>
+
+				<h3>RepeatView Average</h3>
+				<div id="repeatAverage" class="graphs"></div>
+
+				<h3>RepeatView Median</h3>
+				<div id="repeatMedian" class="graphs"></div>
+
+			</div>
+		</div>
+
+			
+		
+	</div>
+
+</body>
+</html>

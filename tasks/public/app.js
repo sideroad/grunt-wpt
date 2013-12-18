@@ -1,0 +1,110 @@
+(function( $, _ ){
+
+	var renderResponseAverage = function(results, type){
+	      render({
+	      	data: _.map(results, function(result){
+					var obj = result.response.data.average[type] || {};
+					obj.date = new Date( result.info.completed*1000 ).getTime();
+					return obj;
+				  }),
+		    keys: ['fullyLoaded', 'loadTime'],
+	        labels: ['Fully Loaded', 'Document Complete'],
+	        element: type === 'firstView' ? 'firstAverage' : 'repeatAverage'
+	      });		  
+		},
+		renderResponseMedian = function(results, type){
+	      render({
+	      	data: _.map(results, function(result){
+					var obj = result.response.data.median[type] || {};
+					obj.date = new Date( result.info.completed*1000 ).getTime();
+					return obj;
+				  }),
+		    keys: [
+		    	'fullyLoaded',
+		    	'loadTime',
+                'loadEventEnd',
+		    	'loadEventStart',
+                'domContentLoadedEventEnd',
+                'domContentLoadedEventStart'
+            ],
+	        labels: [
+	        	'Fully Loaded',
+	        	'Load Time',
+                'LoadEvent End',
+		    	'LoadEvent Start',
+                'DOMContentLoadedEvent End',
+                'DOMContentLoadedEvent Start'
+            ],
+	        element: type === 'firstView' ? 'firstMedian' : 'repeatMedian'
+	      });
+		},
+		render = function(data){
+			$("#"+data.element).html('');
+			Morris.Area({
+			  element: data.element,
+			  data: data.data,
+			  xkey: 'date',
+			  ykeys: data.keys,
+			  labels: data.labels,
+			  behaveLikeLine: true
+			});
+		};
+
+	$.when(
+		$.ajax({
+			url: 'results.json',
+			dataType: 'json'
+		}),
+		$.ajax({
+			url: 'locations.json',
+			dataType: 'json'
+		})
+	).done(function(resultsAjax, locationsAjax){
+		var results = resultsAjax[0],
+			locations = locationsAjax[0],
+		    $locations = $("#locations"),
+			$urls = $('#urls');
+
+		$locations.html(_.map(results, function(urls, location){
+			return '<option value="'+location+'">'+locations[location]+'</option>'
+		}).join(''));
+
+		$locations.change(function(){
+			var location = $locations.val();
+
+			$urls.html(_(results[location]).map(function(ids, url){
+				return '<option>'+url+'</option>';
+			}).join(''));
+
+			$urls.change(function(){
+				var url = $urls.val(),
+					dummy = new $.Deferred()
+				    requests = [dummy];
+
+				dummy.resolve([]);
+
+				_(results[location][url]).each(function(id){
+					requests.push($.ajax({
+						url: 'tests/'+id+'.json',
+						dataType: 'json'
+					}));
+				});
+
+				$.when.apply( $, requests ).done(function(){
+					var results = _.map(arguments, function(arr){
+						return arr[0];
+					});
+					results.shift();
+
+					renderResponseAverage( results, 'firstView' );
+					renderResponseMedian( results, 'firstView' );
+					renderResponseAverage( results, 'repeatView' );
+					renderResponseMedian( results, 'repeatView' );
+
+				});
+			}).change();
+		}).change();
+	});
+
+
+})(jQuery, _);
