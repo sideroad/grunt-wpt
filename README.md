@@ -1,6 +1,6 @@
 # grunt-wpt
 
-> Grunt plugin for executing webpagetest
+> Grunt plugin for continuously measurement of WebPageTest
 
 ## Getting Started
 This plugin requires Grunt `~0.4.0`
@@ -21,66 +21,44 @@ grunt.loadNpmTasks('grunt-wpt');
 
 ### Overview
 In your project's Gruntfile, add a section named `wpt` to the data object passed into `grunt.initConfig()`.
+Plugin output JSON and HTML to `dest` which summarized results after executing WebPageTest.
 
 ```js
 grunt.initConfig({
   wpt: {
     options: {
-      // Task-specific options go here.
+      locations: ['Tokyo', 'SanJose_IE9'],
+      key: process.env.WPT_API_KEY
     },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
-  },
-})
+    sideroad: {
+      options: {
+        url: [
+          'http://sideroad.secret.jp/',
+          'http://sideroad.secret.jp/articles/',
+          'http://sideroad.secret.jp/plugins/'
+        ]
+      },
+      dest: 'tmp/sideroad/'
+    }
+  }
+});
 ```
 
 ### Options
 
-#### options.separator
+#### options.locations
+Type: `Array` of `String`
+Default value: `['SanJose_IE9']`
+
+Array of testing locations
+
+#### options.key
 Type: `String`
-Default value: `',  '`
+Default value: `undefined`
 
-A string value that is used to do something with whatever.
+Set value if assigned to public instance
 
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
-
-A string value that is used to do something else with whatever else.
-
-### Usage Examples
-
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
-
-```js
-grunt.initConfig({
-  wpt: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-})
-```
-
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
-
-```js
-grunt.initConfig({
-  wpt: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-})
-```
+If you want to know more detail, please see also [WebPageTest API](https://github.com/marcelduran/webpagetest-api)
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
