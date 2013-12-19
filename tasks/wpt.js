@@ -11,7 +11,8 @@ var async = require('async'),
     WebPageTest = require('webpagetest'),
     fs = require('fs'),
     path = require('path'),
-    wrench = require('wrench');
+    wrench = require('wrench'),
+    _ = require('lodash');
 
 module.exports = function(grunt) {
 
@@ -58,13 +59,9 @@ module.exports = function(grunt) {
           async.waterfall([
             function(callback){
               grunt.log.writeln('Running webpagetest server['+url+'] location['+location+']');
-              wpt.runTest(url, {
-                location: location,
-                key: options.key,
-                runs: options.runs,
-                pollResults: options.pollResults,
-                timeout: options.timeout
-              }, function(err, data) {
+              wpt.runTest(url, _.extend({
+                location: location
+              }, options), function(err, data) {
                 var testId;
                 if(err || data.response.statusCode === 400){
                   callback(err || data.response.statusText);

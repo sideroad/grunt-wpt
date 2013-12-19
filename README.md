@@ -52,11 +52,12 @@ Default value: `['SanJose_IE9']`
 
 Array of testing locations
 
-#### options.key
-Type: `String`
-Default value: `undefined`
+#### options.URL
+Type: `Array` of `String`
+Default value: `[]`
 
-Set value if assigned to public instance
+Array of testing URL
+*Required
 
 If you want to know more detail, please see also [WebPageTest API](https://github.com/marcelduran/webpagetest-api)
 
