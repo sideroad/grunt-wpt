@@ -9,7 +9,7 @@
     <script src="//cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.1.2/handlebars.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
-
+    <script src="moment.min.js"></script>
 	<script src='app.js'></script>
 	<title>Grunt WebPageTest</title>
 </head>
@@ -46,6 +46,55 @@
 
 				<h3>RepeatView Median</h3>
 				<div id="repeatMedian" class="graphs"></div>
+
+				<h2>Detail</h2>
+				<h3>Average</h3>
+				<table class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th rowspan="2">Date</th>
+							<th rowspan="2">ID</th>
+							<th colspan="2">FirstView</th>
+							<th colspan="2">RepeatView</th>
+						</tr>
+						<tr>
+							<th>Document Complete</th>
+							<th>Fully Loaded</th>
+							<th>Document Complete</th>
+							<th>Fully Loaded</th>
+						</tr>
+					</thead>
+					<tbody id="averageTable">
+					</tbody>
+				</table>
+
+				<h3>Median</h3>
+				<table class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th rowspan="2">Date</th>
+							<th rowspan="2">ID</th>
+							<th colspan="6">FirstView</th>
+							<th colspan="6">RepeatView</th>
+						</tr>
+						<tr>
+							<th>DOM Content Ready Start</th>
+							<th>DOM Content Ready End</th>
+							<th>Document Complete</th>
+							<th>Load Event Start</th>
+							<th>Load Event End</th>
+							<th>Fully Loaded</th>
+							<th>DOM Content Ready Start</th>
+							<th>DOM Content Ready End</th>
+							<th>Document Complete</th>
+							<th>Load Event Start</th>
+							<th>Load Event End</th>
+							<th>Fully Loaded</th>
+						</tr>
+					</thead>
+					<tbody id="medianTable">
+					</tbody>
+				</table>
 
 			</div>
 		</div>

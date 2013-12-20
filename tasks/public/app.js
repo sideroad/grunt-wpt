@@ -21,22 +21,58 @@
 				  }),
 		    keys: [
 		    	'fullyLoaded',
-		    	'loadTime',
                 'loadEventEnd',
 		    	'loadEventStart',
+		    	'loadTime',
                 'domContentLoadedEventEnd',
                 'domContentLoadedEventStart'
             ],
 	        labels: [
 	        	'Fully Loaded',
-	        	'Load Time',
-                'LoadEvent End',
-		    	'LoadEvent Start',
-                'DOMContentLoadedEvent End',
-                'DOMContentLoadedEvent Start'
+                'Load Event End',
+		    	'Load Event Start',
+	        	'Document Complete',
+                'DOM Content Ready End',
+                'DOM Content Ready Start'
             ],
 	        element: type === 'firstView' ? 'firstMedian' : 'repeatMedian'
 	      });
+		},
+		renderResponseAverageTable = function(results){
+			var $tbody = $('#averageTable');
+			
+			$tbody.html(_.map(results, function(result){
+				return  '<tr>'+
+						'<td>'+moment(result.info.completed*1000).format('LLL')+'</td>'+
+						'<td><a href="'+result.response.data.summary+'">'+result.info.id+'</a></td>'+
+					    '<td>'+result.response.data.average.firstView.loadTime+'</td>'+
+					    '<td>'+result.response.data.average.firstView.fullyLoaded+'</td>'+
+					    '<td>'+result.response.data.average.repeatView.loadTime+'</td>'+
+					    '<td>'+result.response.data.average.repeatView.fullyLoaded+'</td>'+
+					    '</tr>';
+			}));
+		},
+		renderResponseMedianTable = function(results){
+			var $tbody = $('#medianTable');
+			
+			$tbody.html(_.map(results, function(result){
+				return  '<tr>'+
+						'<td>'+moment(result.info.completed*1000).format('LLL')+'</td>'+
+						'<td><a href="'+result.response.data.summary+'">'+result.info.id+'</a></td>'+
+					    '<td>'+result.response.data.median.firstView.domContentLoadedEventStart+'</td>'+
+					    '<td>'+result.response.data.median.firstView.domContentLoadedEventEnd+'</td>'+
+					    '<td>'+result.response.data.median.firstView.loadTime+'</td>'+
+					    '<td>'+result.response.data.median.firstView.loadEventStart+'</td>'+
+					    '<td>'+result.response.data.median.firstView.loadEventEnd+'</td>'+
+					    '<td>'+result.response.data.median.firstView.fullyLoaded+'</td>'+
+					    '<td>'+result.response.data.median.repeatView.domContentLoadedEventStart+'</td>'+
+					    '<td>'+result.response.data.median.repeatView.domContentLoadedEventEnd+'</td>'+
+					    '<td>'+result.response.data.median.repeatView.loadTime+'</td>'+
+					    '<td>'+result.response.data.median.repeatView.loadEventStart+'</td>'+
+					    '<td>'+result.response.data.median.repeatView.loadEventEnd+'</td>'+
+					    '<td>'+result.response.data.median.repeatView.fullyLoaded+'</td>'+
+					    '</tr>';
+			}));
 		},
 		render = function(data){
 			$("#"+data.element).html('');
@@ -86,7 +122,8 @@
 				_(results[location][url]).each(function(id){
 					requests.push($.ajax({
 						url: 'tests/'+id+'.json',
-						dataType: 'json'
+						dataType: 'json',
+						cache: true
 					}));
 				});
 
@@ -100,6 +137,9 @@
 					renderResponseMedian( results, 'firstView' );
 					renderResponseAverage( results, 'repeatView' );
 					renderResponseMedian( results, 'repeatView' );
+
+					renderResponseAverageTable( results );
+					renderResponseMedianTable( results );
 
 				});
 			}).change();
