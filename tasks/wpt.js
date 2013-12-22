@@ -24,7 +24,7 @@ module.exports = function(grunt) {
           server: 'www.webpagetest.org',
           locations: ['SanJose_IE9'],
           pollResults: 5,
-          timeout: 120,
+          timeout: 180,
           runs: 5
         }),
         done = this.async(),
@@ -34,6 +34,11 @@ module.exports = function(grunt) {
           wrench.copyDirSyncRecursive(path.join(__dirname, 'public'), path.join( dest, 'public' ) );
         },
         wpt = new WebPageTest(options.server);
+
+    // Test should be more than 2 times for getting median data
+    if(options.runs < 2){
+      options.runs = 2;
+    }
 
     this.files.forEach(function(f) {
       var resultsPath = path.join(path.join( f.dest, 'public' ), 'results.json'),
