@@ -24,7 +24,7 @@ module.exports = function(grunt) {
           server: 'www.webpagetest.org',
           locations: ['SanJose_IE9'],
           pollResults: 5,
-          timeout: 180,
+          timeout: 360,
           runs: 5
         }),
         done = this.async(),
@@ -65,7 +65,9 @@ module.exports = function(grunt) {
             function(callback){
               grunt.log.writeln('Running webpagetest server['+url+'] location['+location+']');
               wpt.runTest(url, _.extend({
-                location: location
+                location: location,
+                breakDown: true,
+                pageSpeed: true
               }, options), function(err, data) {
                 var testId;
                 if(err || data.response.statusCode === 400){
@@ -80,7 +82,10 @@ module.exports = function(grunt) {
               });
             },
             function(id, callback){
-              wpt.getTestResults( id, function(err, data){
+              wpt.getTestResults( id, {
+                breakDown: true,
+                pageSpeed: true
+              }, function(err, data){
                 if(err){
                   callback(err);
                   return;

@@ -38,6 +38,44 @@
 	        element: type === 'firstView' ? 'firstMedian' : 'repeatMedian'
 	      });
 		},
+		renderContentsSize = function(results, type){
+		  var keys = [
+		    	'total',
+                'html',
+		    	'css',
+		    	'image',
+                'flash',
+                'js',
+                'text',
+                'other'
+              ];
+
+	      render({
+	      	data: _.map(results, function(result){
+					var obj = {};
+					_.each(result.response.data.median[type].breakdown, function(val, key){
+						obj[key] = val.bytes;
+					});
+					obj.total = _.reduce(keys, function(memo, key){
+						return memo + (obj[key]||0);
+					}, 0);
+					obj.date = new Date( result.info.completed*1000 ).getTime();
+					return obj;
+				  }),
+		    keys: keys,
+	        labels: [
+	        	'Total',
+	        	'HTML',
+	        	'CSS',
+	        	'Image',
+	        	'Flash',
+	        	'JavaScript',
+	        	'Text',
+	        	'Other'
+            ],
+	        element: type === 'firstView' ? 'firstContentsSize' : 'repeatContentsSize'
+	      });
+	  	},
 		renderResponseAverageTable = function(results){
 			var $tbody = $('#averageTable');
 			
@@ -74,6 +112,30 @@
 					    '</tr>';
 			}));
 		},
+		renderContentsSizeTable = function(results){
+			var $tbody = $('#contentsSizeTable'),
+				keys = [];
+			
+			$tbody.html(_.map(results, function(result){
+				return  '<tr>'+
+					    '<td>'+moment(result.info.completed*1000).format('LLL')+'</td>'+
+					    '<td><a href="'+result.response.data.summary+'">'+result.info.id+'</a></td>'+
+					    _.map(['firstView', 'repeatView'], function(type){
+							var obj = {};
+							_.each(result.response.data.median[type].breakdown, function(val, key){
+								obj[key] = val.bytes;
+							});
+							obj.total = _.reduce(keys, function(memo, key){
+								return memo + (obj[key]||0);
+							}, 0);
+
+							return  _.map(obj, function(val){
+										return '<td>'+val+'</td>';
+									}).join('');
+						})+
+						'</tr>';
+			}));
+	  	},
 		render = function(data){
 			$("#"+data.element).html('');
 			Morris.Area({
@@ -140,6 +202,12 @@
 
 					renderResponseAverageTable( results );
 					renderResponseMedianTable( results );
+
+					renderContentsSize( results, 'firstView' );
+					renderContentsSize( results, 'repeatView' );
+
+					renderContentsSizeTable( results );
+					renderContentsSizeTable( results );
 
 				});
 			}).change();

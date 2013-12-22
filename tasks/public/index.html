@@ -31,25 +31,33 @@
 				<select id="locations" class="form-control"></select>
 		  		<h2>URL</h2>
 				<select id="urls" class="form-control"></select>
+
+				<ul class="nav nav-pills nav-stacked">
+				  <li>
+				  	<a href="#responseTime">Response Time</a>
+				  	<a href="#contentsSize">Contents Size</a>
+				  </li>
+				</ul>
 			</div>
 			<div class="col-md-10">
 
-				<h2>Response Time</h2>
-
-				<h3>FirstView Average</h3>
+				<h2 id="responseTime" >Response Time</h2>
+				<h3>FirstView</h3>
+				<h4>Average</h4>
 				<div id="firstAverage" class="graphs"></div>
 
-				<h3>FirstView Median</h3>
+				<h4>Median</h4>
 				<div id="firstMedian" class="graphs"></div>
 
-				<h3>RepeatView Average</h3>
+				<h3>RepeatView</h3>
+				<h4>Average</h4>
 				<div id="repeatAverage" class="graphs"></div>
 
-				<h3>RepeatView Median</h3>
+				<h4>Median</h4>
 				<div id="repeatMedian" class="graphs"></div>
 
-				<h3>Detail</h2>
-				<h4>Average</h3>
+				<h3>Detail</h3>
+				<h4>Average</h4>
 				<table class="table table-striped table-bordered">
 					<thead>
 						<tr>
@@ -96,6 +104,48 @@
 					<tbody id="medianTable">
 					</tbody>
 				</table>
+
+
+				<h2 id="contentsSize" >Contents Size</h2>
+				<h3>FirstView</h3>
+				<div id="firstContentsSize" class="graphs"></div>
+
+				<h3>RepeatView</h3>
+				<div id="repeatContentsSize" class="graphs"></div>
+
+				<h3>Detail</h3>
+				<table class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th rowspan="2">Date</th>
+							<th rowspan="2">ID</th>
+							<th colspan="8">FirstView</th>
+							<th colspan="8">RepeatView</th>
+						</tr>
+						<tr>
+							<th>Total</th>
+							<th>HTML</th>
+							<th>Image</th>
+							<th>JS</th>
+							<th>CSS</th>
+							<th>Flash</th>
+							<th>Text</th>
+							<th>Others</th>
+							<th>Total</th>
+							<th>HTML</th>
+							<th>Image</th>
+							<th>JS</th>
+							<th>CSS</th>
+							<th>Flash</th>
+							<th>Text</th>
+							<th>Others</th>
+						</tr>
+					</thead>
+					<tbody id="contentsSizeTable">
+					</tbody>
+				</table>
+
+
 
 			</div>
 		</div>
