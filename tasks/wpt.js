@@ -22,7 +22,7 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('wpt', 'Webpagetest', function() {    
     var options = this.options({
           server: 'www.webpagetest.org',
-          locations: ['SanJose_IE9'],
+          locations: ['Dulles_IE10'],
           pollResults: 5,
           timeout: 360,
           runs: 5

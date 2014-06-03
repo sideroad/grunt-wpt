@@ -25,13 +25,13 @@ module.exports = function(grunt) {
 
     // Before generating any new files, remove any previously-created files.
     clean: {
-      tests: [],
+      tests: ['tmp'],
     },
 
     // Configuration to be run (and then tested).
     wpt: {
       options: {
-        locations: ['Tokyo'],
+        locations: ['Dulles_IE10'],
         runs: 2,
         key: process.env.WPT_API_KEY
       },

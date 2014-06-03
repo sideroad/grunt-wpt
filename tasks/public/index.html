@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="//cdn.oesmith.co.uk/morris-0.4.3.min.css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="//cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.1.2/handlebars.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <script src="moment.min.js"></script>
 	<script src='app.js'></script>
 	<title>Grunt WebPageTest</title>
@@ -26,18 +27,20 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col-md-2">
-		  		<h2>Location</h2>
-				<select id="locations" class="form-control"></select>
-		  		<h2>URL</h2>
-				<select id="urls" class="form-control"></select>
+			<div class="col-md-2" >
+				<div data-spy="affix" data-offset-top="60">
+			  		<h2>Location</h2>
+					<select id="locations" class="form-control"></select>
+			  		<h2>URL</h2>
+					<select id="urls" class="form-control"></select>
 
-				<ul class="nav nav-pills nav-stacked">
-				  <li>
-				  	<a href="#responseTime">Response Time</a>
-				  	<a href="#contentsSize">Contents Size</a>
-				  </li>
-				</ul>
+					<ul class="nav nav-pills nav-stacked">
+					  <li>
+					  	<a href="#responseTime">Response Time</a>
+					  	<a href="#contentsSize">Contents Size</a>
+					  </li>
+					</ul>
+				</div>
 			</div>
 			<div class="col-md-10">
 
