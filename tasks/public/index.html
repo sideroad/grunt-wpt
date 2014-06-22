@@ -4,14 +4,16 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="//cdn.oesmith.co.uk/morris-0.4.3.min.css">
+    <link rel="stylesheet" href="css/wpt.css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="//cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.1.2/handlebars.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-    <script src="moment.min.js"></script>
-	<script src='app.js'></script>
+    <script src="js/moment.min.js"></script>
+    <script src="js/vue.min.js"></script>
+	<script src='js/app.js'></script>
 	<title>Grunt WebPageTest</title>
 </head>
 <body>
@@ -25,14 +27,18 @@
 		</nav>
 	</div>
 
-	<div class="container">
+	<div id="app" class="container">
 		<div class="row">
-			<div class="col-md-2" >
+			<div class="col-md-2 sidebar" >
 				<div data-spy="affix" data-offset-top="60">
 			  		<h2>Location</h2>
-					<select id="locations" class="form-control"></select>
+					<select id="locations" class="form-control" v-model="location" >
+						<option v-repeat="locations" value="{{$key}}" >{{$value}}</option>
+					</select>
 			  		<h2>URL</h2>
-					<select id="urls" class="form-control"></select>
+					<select id="urls" class="form-control" v-model="url" v-on="change: render" >
+						<option v-repeat="urls" value="{{$key}}" >{{$key}}</option>
+					</select>
 
 					<ul class="nav nav-pills nav-stacked">
 					  <li>
@@ -70,13 +76,17 @@
 							<th colspan="2">RepeatView</th>
 						</tr>
 						<tr>
-							<th>Document Complete</th>
-							<th>Fully Loaded</th>
-							<th>Document Complete</th>
-							<th>Fully Loaded</th>
+							<th v-repeat="labels.responseTime.average">{{$value}}</th>
+							<th v-repeat="labels.responseTime.average">{{$value}}</th>
 						</tr>
 					</thead>
 					<tbody id="averageTable">
+						<tr v-repeat="tests" >
+							<td>{{info.completed | convertToDate }}</td>
+							<td><a v-attr="href: response.data.summary">{{info.id}}</a></td>
+							<td v-repeat="labels.responseTime.average">{{response.data.average.firstView[$key] | ms}}</td>
+							<td v-repeat="labels.responseTime.average">{{response.data.average.repeatView[$key] | ms}}</td>
+						</tr>
 					</tbody>
 				</table>
 
@@ -90,21 +100,18 @@
 							<th colspan="6">RepeatView</th>
 						</tr>
 						<tr>
-							<th>DOM Content Ready Start</th>
-							<th>DOM Content Ready End</th>
-							<th>Document Complete</th>
-							<th>Load Event Start</th>
-							<th>Load Event End</th>
-							<th>Fully Loaded</th>
-							<th>DOM Content Ready Start</th>
-							<th>DOM Content Ready End</th>
-							<th>Document Complete</th>
-							<th>Load Event Start</th>
-							<th>Load Event End</th>
-							<th>Fully Loaded</th>
+
+							<th v-repeat="labels.responseTime.median">{{$value}}</th>
+							<th v-repeat="labels.responseTime.median">{{$value}}</th>
 						</tr>
 					</thead>
 					<tbody id="medianTable">
+						<tr v-repeat="tests">
+							<td>{{info.completed | convertToDate}}</td>
+							<td><a v-attr="href: response.data.summary">{{info.id}}</a></td>
+							<td v-repeat="labels.responseTime.median">{{response.data.median.firstView[$key] | ms}}</td>
+							<td v-repeat="labels.responseTime.median">{{response.data.median.repeatView[$key] | ms}}</td>
+						</tr>
 					</tbody>
 				</table>
 
@@ -127,35 +134,24 @@
 						</tr>
 						<tr>
 							<th>Total</th>
-							<th>HTML</th>
-							<th>Image</th>
-							<th>JS</th>
-							<th>CSS</th>
-							<th>Flash</th>
-							<th>Text</th>
-							<th>Others</th>
+							<th v-repeat="labels.contents">{{$value}}</th>
 							<th>Total</th>
-							<th>HTML</th>
-							<th>Image</th>
-							<th>JS</th>
-							<th>CSS</th>
-							<th>Flash</th>
-							<th>Text</th>
-							<th>Others</th>
+							<th v-repeat="labels.contents">{{$value}}</th>
 						</tr>
 					</thead>
 					<tbody id="contentsSizeTable">
+						<tr v-repeat="tests" >
+							<td>{{info.completed | convertToDate}}</td>
+							<td><a v-attr="href: response.data.summary">{{info.id}}</a></td>
+							<td>{{response.data.median.firstView.breakdown | totalBytes | KB}}</td>
+							<td v-repeat="labels.contents" >{{response.data.median.firstView.breakdown[$key].bytes | KB}}</td>
+							<td>{{response.data.median.repeatView.breakdown | totalBytes | KB}}</td>
+							<td v-repeat="labels.contents" >{{response.data.median.repeatView.breakdown[$key].bytes | KB}}</td>
+	 					</tr>
 					</tbody>
 				</table>
-
-
-
 			</div>
 		</div>
-
-			
-		
 	</div>
-
 </body>
 </html>
