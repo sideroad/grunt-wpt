@@ -44,6 +44,7 @@
 					  <li>
 					  	<a href="#responseTime">Response Time</a>
 					  	<a href="#contentsSize">Contents Size</a>
+					  	<a href="#contentsRequests">Contents Requests</a>
 					  </li>
 					</ul>
 				</div>
@@ -150,6 +151,42 @@
 	 					</tr>
 					</tbody>
 				</table>
+
+				<h2 id="contentsRequests" >Contents Requests</h2>
+				<h3>FirstView</h3>
+				<div id="firstContentsRequests" class="graphs"></div>
+
+				<h3>RepeatView</h3>
+				<div id="repeatContentsRequests" class="graphs"></div>
+
+				<h3>Detail</h3>
+				<table class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th rowspan="2">Date</th>
+							<th rowspan="2">ID</th>
+							<th colspan="8">FirstView</th>
+							<th colspan="8">RepeatView</th>
+						</tr>
+						<tr>
+							<th>Total</th>
+							<th v-repeat="labels.contents">{{$value}}</th>
+							<th>Total</th>
+							<th v-repeat="labels.contents">{{$value}}</th>
+						</tr>
+					</thead>
+					<tbody id="contentsRequestsTable">
+						<tr v-repeat="tests" >
+							<td>{{info.completed | convertToDate}}</td>
+							<td><a v-attr="href: response.data.summary">{{info.id}}</a></td>
+							<td>{{response.data.median.firstView.breakdown | totalRequests }}</td>
+							<td v-repeat="labels.contents" >{{response.data.median.firstView.breakdown[$key].requests }}</td>
+							<td>{{response.data.median.repeatView.breakdown | totalRequests }}</td>
+							<td v-repeat="labels.contents" >{{response.data.median.repeatView.breakdown[$key].requests }}</td>
+	 					</tr>
+					</tbody>
+				</table>
+
 			</div>
 		</div>
 	</div>
