@@ -41,8 +41,8 @@ module.exports = function(grunt) {
     }
 
     this.files.forEach(function(f) {
-      var resultsPath = path.join(path.join( f.dest, 'public' ), 'results.json'),
-          locationsPath = path.join(path.join( f.dest, 'public' ), 'locations.json'),
+      var resultsPath = path.join( f.dest, 'public/tests/results.json' ),
+          locationsPath = path.join( f.dest, 'public/tests/locations.json'),
           isAlreadyExists = fs.existsSync(resultsPath),
           results = {},
           locations = {};
