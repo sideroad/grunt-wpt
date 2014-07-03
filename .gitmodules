@@ -1,0 +1,3 @@
+[submodule "tasks/public"]
+	path = tasks/public
+	url = https://github.com/sideroad/grunt-wpt-page.git
