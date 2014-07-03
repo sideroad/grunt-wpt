@@ -61,6 +61,9 @@ Array of testing URL
 
 If you want to know more detail, please see also [WebPageTest API](https://github.com/marcelduran/webpagetest-api)
 
+## Examples
+http://sideroad.github.io/sample-wpt-page/
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
