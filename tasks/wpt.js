@@ -28,30 +28,33 @@ module.exports = function(grunt) {
           runs: 5
         }),
         done = this.async(),
-        initialize = function(dest){
-          grunt.log.debug('Initialize dest directory['+path.resolve( dest )+'] from '+path.join(__dirname, 'base'));
-          wrench.mkdirSyncRecursive(dest);
-          wrench.copyDirSyncRecursive(path.join(__dirname, 'public'), path.join( dest, 'public' ) );
-        },
         wpt = new WebPageTest(options.server);
 
-    // Test should be more than 2 times for getting median data
+    // Should be tested more than 2 times for getting median data
     if(options.runs < 2){
       options.runs = 2;
     }
 
     this.files.forEach(function(f) {
-      var resultsPath = path.join( f.dest, 'public/tests/results.json' ),
-          locationsPath = path.join( f.dest, 'public/tests/locations.json'),
+      var resultsPath = path.join( f.dest, 'tests', 'results.json' ),
+          locationsPath = path.join( f.dest, 'tests', 'locations.json'),
           isAlreadyExists = fs.existsSync(resultsPath),
-          results = {},
-          locations = {};
+          results,
+          locations;
+
+      grunt.file.copy( path.join(__dirname, 'public', 'index.html'), path.join( f.dest, 'index.html' ) );
+      wrench.copyDirSyncRecursive(path.join(__dirname, 'public', 'build'), path.join( f.dest, 'build' ), {
+        forceDelete: true
+      });
 
       if(!isAlreadyExists){
-        initialize(f.dest);
+          grunt.log.debug('Initialize dest directory['+path.resolve( f.dest )+'] from '+path.join(__dirname, 'public'));
+          wrench.mkdirSyncRecursive( path.join( f.dest, 'tests' ));
+          grunt.file.write(resultsPath, '{}');
+          grunt.file.write(locationsPath, '{}');
       }
-      results = JSON.parse( fs.readFileSync(resultsPath, 'utf-8') );
-      locations = JSON.parse( fs.readFileSync(locationsPath, 'utf-8') );
+      results = grunt.file.readJSON( resultsPath );
+      locations = grunt.file.readJSON(locationsPath );
 
       async.mapSeries(options.locations, function(location, callback){
         if(!results[location]){
@@ -106,7 +109,7 @@ module.exports = function(grunt) {
 
                 grunt.log.debug("Get test info");
 
-                fs.writeFileSync(path.join( path.join( f.dest, 'public/tests'), id+".json" ), JSON.stringify( data ), 'utf-8');
+                grunt.file.write(path.join( path.join( f.dest, 'tests'), id+".json" ), JSON.stringify( data ));
                 callback(null, true);
               });
             }
@@ -121,8 +124,8 @@ module.exports = function(grunt) {
           grunt.log.error(JSON.stringify( err ));
           done(false);
         }
-        fs.writeFileSync(locationsPath, JSON.stringify( locations ));
-        fs.writeFileSync(resultsPath, JSON.stringify( results ));
+        grunt.file.write(locationsPath, JSON.stringify( locations ));
+        grunt.file.write(resultsPath, JSON.stringify( results ));
         done(true);
       });
     });

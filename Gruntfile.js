@@ -25,7 +25,7 @@ module.exports = function(grunt) {
 
     // Before generating any new files, remove any previously-created files.
     clean: {
-      tests: ['tmp'],
+      tests: ['pages'],
     },
 
     // Configuration to be run (and then tested).
@@ -43,7 +43,7 @@ module.exports = function(grunt) {
             'http://sideroad.secret.jp/plugins/'
           ]
         },
-        dest: 'tmp/sideroad/'
+        dest: 'pages/sideroad/'
       },
       github: {
         options: {
@@ -52,7 +52,7 @@ module.exports = function(grunt) {
             'http://github.com/sideroad/',
           ]
         },
-        dest: 'tmp/github/'
+        dest: 'pages/github/'
       }
     },
 
@@ -86,9 +86,9 @@ module.exports = function(grunt) {
 
   // Whenever the 'test' task is run, first clean the 'tmp' dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'wpt', 'nodeunit']);
+  grunt.registerTask('test', ['nodeunit']);
 
   // By default, lint and run all tests.
-  grunt.registerTask('default', ['jshint', 'componentbuild', 'test']);
+  grunt.registerTask('default', ['jshint', 'wpt']);
 
 };

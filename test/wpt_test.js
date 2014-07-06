@@ -30,7 +30,7 @@ exports.wpt = {
   locations: function(test) {
     test.expect(1);
 
-    var actual = grunt.file.read('tmp/sideroad/public/locations.json');
+    var actual = grunt.file.read('tmp/sideroad/tests/locations.json');
     var expected = grunt.file.read('test/expected/locations.json');
     test.equal(actual, expected, 'should describe what the default behavior is.');
 
