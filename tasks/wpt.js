@@ -94,22 +94,9 @@ module.exports = function(grunt) {
                   return;
                 }
                 grunt.log.debug("Get test results");
-
-                callback(null, id, data);
-              });
-            },
-            function(id, data, callback){
-              wpt.getTestInfo( id, function(err, info){
-                if(err){
-                  callback(err);
-                  return;
-                }
-                data.info = info;
-                locations[location] = info.locationLabel;
-
-                grunt.log.debug("Get test info");
-
+                locations[location] = location;
                 grunt.file.write(path.join( path.join( f.dest, 'tests'), id+".json" ), JSON.stringify( data ));
+
                 callback(null, true);
               });
             }
