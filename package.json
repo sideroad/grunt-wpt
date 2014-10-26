@@ -1,7 +1,7 @@
 {
   "name": "grunt-wpt",
   "description": "Grunt plugin for executing webpagetest",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "homepage": "https://github.com/sideroad/grunt-wpt",
   "author": {
     "name": "sideroad",
@@ -30,7 +30,6 @@
   },
   "devDependencies": {
     "grunt": "~0.4.0",
-    "grunt-component-build": "^0.5.0",
     "grunt-contrib-clean": "~0.4.0",
     "grunt-contrib-jshint": "~0.1.1",
     "grunt-contrib-nodeunit": "^0.4.1"
