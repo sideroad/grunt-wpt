@@ -25,7 +25,8 @@ module.exports = function(grunt) {
           locations: ['Dulles_IE10'],
           pollResults: 5,
           timeout: 360,
-          runs: 5
+          runs: 5,
+          video: 1
         }),
         done = this.async(),
         wpt = new WebPageTest(options.server);
