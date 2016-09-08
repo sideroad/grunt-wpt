@@ -19,9 +19,9 @@ module.exports = function(grunt) {
   // Please see the Grunt documentation for more information regarding task
   // creation: http://gruntjs.com/creating-tasks
 
-  grunt.registerMultiTask('wpt', 'Webpagetest', function() {    
+  grunt.registerMultiTask('wpt', 'Webpagetest', function() {
     var options = this.options({
-          server: 'www.webpagetest.org',
+          server: 'https://www.webpagetest.org',
           locations: ['Dulles_IE10'],
           pollResults: 5,
           timeout: 360,

@@ -50,7 +50,9 @@ grunt.initConfig({
 Type: `Array` of `String`
 Default value: `['SanJose_IE9']`
 
-Array of testing locations
+Array of testing locations.
+
+Please check https://www.webpagetest.org/getLocations.php to confirm valid locations.
 
 #### options.URL
 Type: `Array` of `String`

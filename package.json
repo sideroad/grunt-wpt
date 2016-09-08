@@ -1,7 +1,7 @@
 {
   "name": "grunt-wpt",
   "description": "Grunt plugin for executing webpagetest",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "homepage": "https://github.com/sideroad/grunt-wpt",
   "author": {
     "name": "sideroad",
