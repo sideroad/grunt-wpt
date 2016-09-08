@@ -31,7 +31,7 @@ module.exports = function(grunt) {
     // Configuration to be run (and then tested).
     wpt: {
       options: {
-        locations: ['Dulles_MotoG:Motorola G - Chrome', 'Dulles_IE11'],
+        locations: ['Dulles:Chrome', 'Dulles_IE11'],
         runs: 2,
         key: process.env.WPT_API_KEY
       },
